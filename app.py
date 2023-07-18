@@ -14,10 +14,10 @@ app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'rama'  # Change this to your desired secret key
 jwt = JWTManager(app)
 
-password=os.environ.get("MONGODB_PWD")
+# password=os.environ.get("MONGODB_PWD")
 print(password)
 # MongoDB Atlas connection configuration
-connectionstr=f"mongodb+srv://flask:{password}@flask.dfs8idt.mongodb.net/"
+connectionstr=f"mongodb+srv://flask:Balaji99.@flask.dfs8idt.mongodb.net/"
 client = MongoClient(connectionstr)
 print(client.list_database_names())
 # client = MongoClient('<mongodb-atlas-connection-string>')  # Replace with your MongoDB Atlas connection string
