@@ -1,4 +1,3 @@
-
 from flask import Flask, request, jsonify
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 from pymongo import MongoClient
@@ -15,23 +14,19 @@ app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'rama'  # Change this to your desired secret key
 jwt = JWTManager(app)
 
-# password=os.environ.get("MONGODB_PWD")
+password=os.environ.get("MONGODB_PWD")
 print(password)
 # MongoDB Atlas connection configuration
-connectionstr=f"mongodb+srv://flask:Balaji99.@flask.dfs8idt.mongodb.net/"
+connectionstr=f"mongodb+srv://balajimani849:{password}@cluster0.shtdp5f.mongodb.net/"
 client = MongoClient(connectionstr)
-# print(client.list_database_names())
+print(client.list_database_names())
 # client = MongoClient('<mongodb-atlas-connection-string>')  # Replace with your MongoDB Atlas connection string
 
 db = client['test']
-# print(client['test'].list_collection_names())
+print(client['test'].list_collection_names())
   # Replace with your database name
 collection = db['test']  # Replace with your collection name
 
-
-@app.route('/',methods=['GET'])
-def home():
-  return "home"
 # User registration endpoint
 @app.route('/register', methods=['POST'])
 def register():
@@ -86,6 +81,7 @@ def create_template():
         return jsonify({'message': 'All fields are required'}), 400
 
     current_user = get_jwt_identity()
+    print(current_user)
 
     template_id = collection.insert_one({
         'user_id': ObjectId(current_user),
@@ -94,7 +90,7 @@ def create_template():
         'body': body
     }).inserted_id
 
-    return jsonify({'message': 'Template created successfully', 'template_id': str(template_id),"ObjId":ObjectId(current_user)})
+    return jsonify({'message': 'Template created successfully', 'template_id': str(template_id)})
 
 @app.route('/template', methods=['GET'])
 @jwt_required()
