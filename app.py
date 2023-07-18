@@ -27,6 +27,10 @@ print(client['test'].list_collection_names())
   # Replace with your database name
 collection = db['test']  # Replace with your collection name
 
+
+@app.route('/',methods=['GET'])
+def home():
+  return "home"
 # User registration endpoint
 @app.route('/register', methods=['POST'])
 def register():
